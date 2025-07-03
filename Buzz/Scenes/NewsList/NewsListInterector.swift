@@ -31,7 +31,7 @@ class NewsListInterector: NewsListBusinessLogic, NewsListDataStore {
                 case .success(let articles):
                     self.articles = articles
                     let response = NewsListModel.FetchNews.Response(articles: articles)
-                    print(articles)
+                    print(response)
                 case .failure(let error):
                     print("Ocorreu um erro ao obter a lista de notícias: \(error.localizedDescription)")
                 }
