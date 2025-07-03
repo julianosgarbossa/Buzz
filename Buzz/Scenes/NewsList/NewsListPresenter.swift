@@ -35,7 +35,7 @@ class NewsListPresenter: NewsListPresentationLogic {
     private func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "pt_BR")
-        formatter.dateFormat = "d 'de' MM 'de' yyyy"
+        formatter.dateFormat = "d 'de' MMMM 'de' yyyy"
         return formatter.string(from: date)
     }
 }
