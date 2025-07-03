@@ -23,7 +23,7 @@ struct NewsListModel {
                 let title: String
                 let description: String
                 let author: String
-                let publisehdAt: String
+                let publishedAt: String
                 let imageUrl: URL
             }
             let displayedArticles: [DisplayedArticle]

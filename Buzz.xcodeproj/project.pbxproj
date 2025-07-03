@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3A3754632E1717540054B1E5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3A3754622E1717540054B1E5 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3A63A0A92E15A333001F1FA7 /* Buzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A3754632E1717540054B1E5 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = Buzz;
 			packageProductDependencies = (
+				3A3754622E1717540054B1E5 /* Kingfisher */,
 			);
 			productName = Buzz;
 			productReference = 3A63A0A92E15A333001F1FA7 /* Buzz.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 3A63A0A02E15A333001F1FA7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3A3754612E1717540054B1E5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3A63A0AA2E15A333001F1FA7 /* Products */;
 			projectDirPath = "";
@@ -347,6 +356,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A3754612E1717540054B1E5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3A3754622E1717540054B1E5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A3754612E1717540054B1E5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3A63A0A12E15A333001F1FA7 /* Project object */;
 }

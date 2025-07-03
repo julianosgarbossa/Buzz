@@ -7,23 +7,44 @@
 
 import UIKit
 
+protocol NewsListDisplayLogic: AnyObject {
+    func displayFetchedNews(viewModel: NewsListModel.FetchNews.ViewModel)
+    func displayError(message: String)
+}
+
 class NewsListViewController: UIViewController {
     
-//    private let interactor = NewsListInterector()
+    var interactor: NewsListBusinessLogic?
+    var displayedArticles: [NewsListModel.FetchNews.ViewModel.DisplayedArticle] = []
     
     private lazy var newsListTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(NewsListArticleCell.self, forCellReuseIdentifier: NewsListArticleCell.identifier)
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .primary
+        view.backgroundColor = UIColor(named: "backgroundColor")
+        self.setup()
+        self.fetchNews()
         self.setVisualElements()
-//        self.interactor.loadNews(request: NewsListModel.FetchNews.Request())
+    }
+    
+    private func setup() {
+        let viewController = self
+        let interactor = NewsListInterector()
+        let presenter = NewsListPresenter()
+        viewController.interactor = interactor
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+    }
+    
+    private func fetchNews() {
+        interactor?.loadNews(request: NewsListModel.FetchNews.Request())
     }
     
     private func setVisualElements() {
@@ -45,21 +66,33 @@ class NewsListViewController: UIViewController {
 // MARK: - Table View DataSource and Delegate
 extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return displayedArticles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        var content = cell.defaultContentConfiguration()
-        content.text = "Notícia"
-        cell.contentConfiguration = content
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsListArticleCell.identifier, for: indexPath) as? NewsListArticleCell else { return UITableViewCell() }
+        cell.configure(article: displayedArticles[indexPath.row])
         return cell
     }
 }
 
 extension NewsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Não está fazendo nada por agora
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - Protocol NewsListDiplayLogic
+extension NewsListViewController: NewsListDisplayLogic {
+    func displayFetchedNews(viewModel: NewsListModel.FetchNews.ViewModel) {
+        self.displayedArticles = viewModel.displayedArticles
+        newsListTableView.reloadData()
+    }
+    
+    func displayError(message: String) {
+        let alert = UIAlertController(title: "Erro!", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 
