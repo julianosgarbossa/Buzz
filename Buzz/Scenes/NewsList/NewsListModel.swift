@@ -20,6 +20,7 @@ struct NewsListModel {
         
         struct ViewModel {
             struct DisplayedArticle {
+                let id: Int
                 let title: String
                 let description: String
                 let author: String
