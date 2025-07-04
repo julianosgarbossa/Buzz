@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsListDetailBusinessLogic {
-    func loadNewsFromId(articleId: Int)
+    func loadNewsFromId(request: NewsListDetailModel.FetchNewsDetail.Request)
 }
 
 protocol NewsListDetailDataStore {
@@ -18,21 +18,23 @@ protocol NewsListDetailDataStore {
 class NewsListDetailInteractor: NewsListDetailBusinessLogic, NewsListDetailDataStore {
     var article: Article?
     private var worker: NewsAPIWorker
+    var presenter: NewsListDetailPresentationLogic?
     
     init(worker: NewsAPIWorker = NewsAPIWorker(networkingService: URLSessionNetworking())) {
         self.worker = worker
     }
     
-    func loadNewsFromId(articleId: Int) {
-        worker.fetchNewsById(articleId: articleId) { [weak self] result in
+    func loadNewsFromId(request: NewsListDetailModel.FetchNewsDetail.Request) {
+        worker.fetchNewsById(articleId: request.id) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let article):
                     self.article = article
-                    print(article)
+                    let article = NewsListDetailModel.FetchNewsDetail.Response(article: article)
+                    self.presenter?.presentFethedNewsById(response: article)
                 case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
+                    self.presenter?.presentError(error: error)
                 }
             }
         }

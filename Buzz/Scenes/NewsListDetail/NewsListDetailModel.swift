@@ -19,7 +19,7 @@ struct NewsListDetailModel {
             struct DisplayedArticle {
                 let title: String
                 let author: String
-                let Description: String
+                let description: String
                 let content: String
                 let url: URL
                 let imageUrl: URL
