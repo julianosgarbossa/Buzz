@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol NewsListDetailDisplayLogic: AnyObject {
+    func displayFetchedNews(viewModel: NewsListDetailModel.FetchNewsDetail.ViewModel)
+    func displayError(message: String)
+}
+
 class NewsListDetailViewController: UIViewController {
     
     var articleId: Int
@@ -23,5 +28,15 @@ class NewsListDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "backgroundColor")
+    }
+}
+
+extension NewsListDetailViewController: NewsListDetailDisplayLogic {
+    func displayFetchedNews(viewModel: NewsListDetailModel.FetchNewsDetail.ViewModel) {
+        print(viewModel.displayedArticle ?? "")
+    }
+    
+    func displayError(message: String) {
+        print(message)
     }
 }
