@@ -9,7 +9,7 @@ import Foundation
 
 enum NewsAPI {
     static let baseURL = "https://my-json-server.typicode.com/alura-cursos/news-api/"
-    static let articles = "articles"
+    static let articles = "articles/"
 }
 
 class NewsAPIWorker {
@@ -29,6 +29,22 @@ class NewsAPIWorker {
             switch result {
             case .success(let articles):
                 completion(.success(articles))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func fetchNewsById(articleId: Int, completion: @escaping (Result<Article, Error>) -> Void) {
+        guard let url = URL(string: NewsAPI.baseURL + NewsAPI.articles + "\(articleId)") else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        networkingService.request(url: url) { (result: Result<Article, Error>) in
+            switch result {
+            case .success(let article):
+                completion(.success(article))
             case .failure(let error):
                 completion(.failure(error))
             }
